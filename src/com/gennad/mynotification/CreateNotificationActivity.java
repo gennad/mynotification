@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.view.Menu;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,12 +16,20 @@ import android.view.View;
 public class CreateNotificationActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
-	  
     super.onCreate(savedInstanceState);
-    
     setContentView(R.layout.activity_main);
+    showList();
   }
+  
+  
+  @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
 
+  
+  /*
   public void createNotification(View view) {
     // Prepare intent which is triggered if the
     // notification is selected
@@ -39,9 +48,19 @@ public class CreateNotificationActivity extends Activity {
     
     NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     
-    // hide the notification after its selected
+    // Hide the notification after its selected
     noti.flags |= Notification.FLAG_AUTO_CANCEL;
-
     notificationManager.notify(0, noti);
   }
+  */
+  
+  
+  public void showList(){
+		CalendarListFragment calendarListFragment = new CalendarListFragment();
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		ft.replace(R.id.layout_container, calendarListFragment);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		ft.commit();
+	}
+
 } 
